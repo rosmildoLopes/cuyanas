@@ -13,20 +13,26 @@ import {
   Text,
 } from "@react-email/components";
 import * as React from "react";
+// import { registerSchema } from "@/validators/auth";
+// import { z } from "zod";
+
+interface ContactMeEmailProps {
+  nombre: string;
+  apellido: string;
+  
+}
+// type Input = z.infer<typeof registerSchema>;
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "";
 
-interface ContactFormEmailProps {
-  nombre: string;
-  apellido: string;
-}
 
-export const InversionesCuyanas: React.FC<Readonly<ContactFormEmailProps>> = ({
+
+export const InversionesCuyanas = ({
   nombre,
   apellido,
-}) => (
+}: ContactMeEmailProps) => (
   <Html>
     <Head />
     <Preview>Detalles de tu Registro en Inversiones Cuyanas</Preview>

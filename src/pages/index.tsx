@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Inter } from "next/font/google";
 import Swal from "sweetalert2";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -40,6 +39,7 @@ import { sendContactForm } from "@/lib/api";
 
 export type Input = z.infer<typeof registerSchema>;
 export default function Home() {
+    
   const emailEnviado = () => {
     Swal.fire({
       title: "Muchas gracias por su tiempo",
@@ -84,19 +84,37 @@ export default function Home() {
   });
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
-    alert(JSON.stringify(data, null, 4));
-    //   try {
-    //     // const result = await sendContactForm(data);
-    //     if (result?.success) {
-    //       console.log({ data: result.data });
-    //       emailEnviado();
-    //     } else {
-    //       console.log(result?.error);
-    //     }
-    //   } catch (error) {
-    //     console.error('Error in onSubmit:', error);
-    //   }
+    const { nombre, apellido, email } = data; // Extrae solo los campos necesarios
+
+    try {
+      const response = await fetch("/api/emails/route", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nombre, apellido, email }), // Envía solo los campos necesarios
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        emailEnviado();
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: `Failed to send email: ${result.message}`,
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Failed to send email",
+        icon: "error",
+      });
+    }
   };
+
 
   const handleStepValidation = () => {
     if (formStep === 0) {

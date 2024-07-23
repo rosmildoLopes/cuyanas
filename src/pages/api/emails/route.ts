@@ -1,29 +1,51 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+// pages/api/emails/route.js
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { Resend } from 'resend';
 import InversionesCuyanas from '@/emails/InversionesCuyanas';
+import { z } from 'zod';
+import { logger } from '../../../../logger';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+logger.info("Resend API Key:", process.env.RESEND_API_KEY);
+console.log("Resend API Key:", process.env.RESEND_API_KEY);
+
+const sendRouteSchema = z.object({
+  nombre: z.string().min(2),
+  apellido: z.string().min(2),
+  email: z.string().email(),
+});
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  
+  logger.info("Resend API Key:", process.env.RESEND_API_KEY);
   if (req.method === 'POST') {
     try {
-      const { email, nombre, apellido } = req.body;
+      logger.info("Request body:", req.body);
+      logger.info("Resend API Key:", process.env.RESEND_API_KEY);
+      const { nombre, apellido, email } = sendRouteSchema.parse(req.body);
+      logger.info("Parsed data:", { nombre, apellido, email });
 
-      const resend = new Resend(process.env.RESEND_API_KEY);
-
-      await resend.emails.send({
+      logger.info("Attempting to send email...");
+      const { data, error } = await resend.emails.send({
         from: 'Acme <onboarding@resend.dev>',
         to: email,
-        subject: 'No Subject',
-        react: InversionesCuyanas({ nombre, apellido }) || '<h1>No Content</h1>',
+        subject: 'Hello world',
+        react: InversionesCuyanas({ nombre, apellido }),
       });
 
-      res.status(200).json({ message: 'Email sent successfully' });
+      if (error) {
+        logger.error('Error al enviar el correo:', error);
+        return res.status(400).json({ message: "Email sending failed", error });
+      }
+
+      logger.info("Email sent successfully:", data);
+      return res.status(200).json({ message: "Email sent successfully", data });
     } catch (error) {
-      console.error('Error sending email:', error);
-      res.status(500).json({ message: 'Failed to send email', error: error.message });
+      logger.error('Error de validación o envío:', error);
+      return res.status(400).json({ error });
     }
   } else {
-    res.setHeader('Allow', ['POST']);
-    res.status(405).json({ message: 'Method Not Allowed' });
+    res.status(405).json({ message: 'Método no permitido' });
   }
 };
 
