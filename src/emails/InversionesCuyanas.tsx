@@ -19,15 +19,12 @@ import * as React from "react";
 interface ContactMeEmailProps {
   nombre: string;
   apellido: string;
-  
 }
 // type Input = z.infer<typeof registerSchema>;
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "";
-
-
 
 export const InversionesCuyanas = ({
   nombre,
@@ -43,7 +40,7 @@ export const InversionesCuyanas = ({
             <Column>
               <Img
                 style={sectionLogo}
-                src={`${baseUrl}/static/logo-cuyanas.jpeg`}
+                src={`/static/logo-cuyanas.jpeg`}
                 width="340"
                 height="120"
                 alt="Logo Inversiones Cuyanas"
@@ -110,7 +107,7 @@ export const InversionesCuyanas = ({
                 <Img
                   width="28"
                   height="28"
-                  src={`${baseUrl}/static/google-play-chat.png`}
+                  src={`/static/google-play-chat.png`}
                   alt="Google Play Chat"
                 />
                 instagram
@@ -121,7 +118,7 @@ export const InversionesCuyanas = ({
                 <Img
                   width="28"
                   height="28"
-                  src={`${baseUrl}/static/google-play-academy.png`}
+                  src={`/static/google-play-academy.png`}
                   alt="Google Play Academy"
                 />
                 facebook

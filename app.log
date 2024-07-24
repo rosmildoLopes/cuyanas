@@ -1,17 +1,4 @@
-{"level":"info","message":"Resend API Key:","timestamp":"2024-07-23T03:07:14.737Z"}
-{"apellido":"Pérez","email":"juan.perez@example.com","level":"info","message":"Request body:","nombre":"Juan","timestamp":"2024-07-23T03:07:14.738Z"}
-{"level":"info","message":"Resend API Key:","timestamp":"2024-07-23T03:07:14.738Z"}
-{"apellido":"Pérez","email":"juan.perez@example.com","level":"info","message":"Parsed data:","nombre":"Juan","timestamp":"2024-07-23T03:07:14.738Z"}
-{"level":"info","message":"Attempting to send email...","timestamp":"2024-07-23T03:07:14.738Z"}
-{"level":"info","message":"Resend API Key:","timestamp":"2024-07-23T03:07:57.235Z"}
-{"level":"info","message":"Resend API Key:","timestamp":"2024-07-23T03:07:57.272Z"}
-{"apellido":"Pérez","email":"juan.perez@example.com","level":"info","message":"Request body:","nombre":"Juan","timestamp":"2024-07-23T03:07:57.272Z"}
-{"level":"info","message":"Resend API Key:","timestamp":"2024-07-23T03:07:57.272Z"}
-{"apellido":"Pérez","email":"juan.perez@example.com","level":"info","message":"Parsed data:","nombre":"Juan","timestamp":"2024-07-23T03:07:57.274Z"}
-{"level":"info","message":"Attempting to send email...","timestamp":"2024-07-23T03:07:57.275Z"}
-{"level":"info","message":"Resend API Key:","timestamp":"2024-07-23T03:58:11.292Z"}
-{"level":"info","message":"Resend API Key:","timestamp":"2024-07-23T03:58:11.308Z"}
-{"apellido":"Pérez","email":"juan.perez@example.com","level":"info","message":"Request body:","nombre":"Juan","timestamp":"2024-07-23T03:58:11.309Z"}
-{"level":"info","message":"Resend API Key:","timestamp":"2024-07-23T03:58:11.310Z"}
-{"apellido":"Pérez","email":"juan.perez@example.com","level":"info","message":"Parsed data:","nombre":"Juan","timestamp":"2024-07-23T03:58:11.314Z"}
-{"level":"info","message":"Attempting to send email...","timestamp":"2024-07-23T03:58:11.314Z"}
+{"apellido":"Pérez","email":"juan.perez@example.com","level":"info","message":"Request body:","nombre":"Juan","timestamp":"2024-07-24T02:29:48.675Z"}
+{"apellido":"Pérez","email":"juan.perez@example.com","level":"info","message":"Parsed data:","nombre":"Juan","timestamp":"2024-07-24T02:29:48.676Z"}
+{"apellido":"Pérez","email":"juan.perez@example.com","level":"info","message":"Request body:","nombre":"Juan","timestamp":"2024-07-24T02:29:54.162Z"}
+{"apellido":"Pérez","email":"juan.perez@example.com","level":"info","message":"Parsed data:","nombre":"Juan","timestamp":"2024-07-24T02:29:54.162Z"}

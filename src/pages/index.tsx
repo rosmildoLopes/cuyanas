@@ -35,7 +35,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
-import { sendContactForm } from "@/lib/api";
+import { sendEmail } from "@/actions";
 
 export type Input = z.infer<typeof registerSchema>;
 export default function Home() {
@@ -84,35 +84,20 @@ export default function Home() {
   });
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
-    const { nombre, apellido, email } = data; // Extrae solo los campos necesarios
+    const response = await fetch('/api/send/route', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        nombre: data.nombre,
+        apellido: data.apellido,
+        email: data.email,
+      }),
+    });
 
-    try {
-      const response = await fetch("/api/emails/route", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ nombre, apellido, email }), // Envía solo los campos necesarios
-      });
-
-      const result = await response.json();
-      if (response.ok) {
-        emailEnviado();
-      } else {
-        Swal.fire({
-          title: "Error",
-          text: `Failed to send email: ${result.message}`,
-          icon: "error",
-        });
-      }
-    } catch (error) {
-      console.error("Error sending email:", error);
-      Swal.fire({
-        title: "Error",
-        text: "Failed to send email",
-        icon: "error",
-      });
-    }
+    const result = await response.json();
+    console.log(result);
   };
 
 
