@@ -98,9 +98,8 @@ export default function Home() {
 
     const result = await response.json();
     console.log(result);
+    
   };
-
-
   const handleStepValidation = () => {
     if (formStep === 0) {
       form.trigger(["dni", "tramiteDni", "genero", "terminos"]);
