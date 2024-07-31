@@ -35,7 +35,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
-import { sendEmail } from "@/actions";
 
 export type Input = z.infer<typeof registerSchema>;
 export default function Home() {
