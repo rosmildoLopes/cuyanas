@@ -2,6 +2,10 @@
   @tailwind components;
   @tailwind utilities;
 
+  .my-swal-popup {
+    width: 80%; 
+    background-color: #d5d4d4;
+  }
   @layer base {
     :root {
       --background: 0 0% 100%;

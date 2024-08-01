@@ -35,10 +35,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
+import { HandleSweetAlertTerminosRenaper } from "@/components/Consetimiento";
+import { FaInfoCircle } from "react-icons/fa";
+import { Client, Databases, ID } from "appwrite";
+import { databases, storage } from "../../appwriteConfig";
+import { USUARIO_COLLECTION_ID, DATABASE_ID } from "../../appwriteConfig";
 
 export type Input = z.infer<typeof registerSchema>;
 export default function Home() {
-    
   const emailEnviado = () => {
     Swal.fire({
       title: "Muchas gracias por su tiempo",
@@ -83,21 +87,39 @@ export default function Home() {
   });
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
-    const response = await fetch('/api/send/route', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        nombre: data.nombre,
-        apellido: data.apellido,
-        email: data.email,
-      }),
-    });
+    // const response = await fetch("/api/send/route", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     nombre: data.nombre,
+    //     apellido: data.apellido,
+    //     email: data.email,
+    //   }),
+    // });
 
-    const result = await response.json();
-    console.log(result);
-    
+    // if (response){
+    //   emailEnviado()
+    // }
+    // Crea un documento en la base de datos de Appwrite
+    try {
+      if (DATABASE_ID && USUARIO_COLLECTION_ID) {
+        const documentResponse = await databases.createDocument(
+          DATABASE_ID,
+          USUARIO_COLLECTION_ID,
+          ID.unique(),
+          data
+        );
+        console.log("Document created:", documentResponse);
+      } else {
+        console.error(
+          "DATABASE_ID o USUARIO_COLLECTION_ID no están definidos."
+        );
+      }
+    } catch (error) {
+      console.error("Error creating document:", error);
+    }
   };
   const handleStepValidation = () => {
     if (formStep === 0) {
@@ -321,8 +343,15 @@ export default function Home() {
                         <FormLabel>
                           Consentimiento informado ante Renaper{" "}
                         </FormLabel>
-                        <p>icono</p>
-                        <FormMessage className="absolute top-6 text-sm" />
+                        <button
+                          className="h-12 w-12 rounded-full"
+                          onClick={HandleSweetAlertTerminosRenaper}
+                        >
+                          <p className="text-blue-700 text-2xl hover:scale-125  transition duration-300">
+                            <FaInfoCircle />
+                          </p>
+                        </button>
+                        <FormMessage className="absolute top-6 text-[12px] italic mt-5 " />
                       </div>
                     </FormItem>
                   )}
