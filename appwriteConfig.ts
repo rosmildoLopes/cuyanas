@@ -5,6 +5,7 @@ export const PROJECT_ID = process.env.PROJECT_ID;
 export const ENDPOINT = process.env.NEXT_PUBLIC_ENDPOINT_ID;
 export const DATABASE_ID = process.env.DATABASE_ID;
 export const USUARIO_COLLECTION_ID = process.env.USUARIO_COLLECTION_ID;
+export const NEXT_PUBLIC_BUCKET_ID = process.env.NEXT_PUBLIC_BUCKET_ID;
 
 if (!ENDPOINT || !PROJECT_ID || !DATABASE_ID || !USUARIO_COLLECTION_ID) {
   console.error("Las variables deben estar definidas correctamente.");

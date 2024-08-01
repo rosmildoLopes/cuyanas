@@ -40,6 +40,7 @@ import { FaInfoCircle } from "react-icons/fa";
 import { Client, Databases, ID } from "appwrite";
 import { databases, storage } from "../../appwriteConfig";
 import { USUARIO_COLLECTION_ID, DATABASE_ID } from "../../appwriteConfig";
+import { InputFile } from "@/components/InputFile";
 
 export type Input = z.infer<typeof registerSchema>;
 export default function Home() {
@@ -102,7 +103,7 @@ export default function Home() {
     // if (response){
     //   emailEnviado()
     // }
-    // Crea un documento en la base de datos de Appwrite
+    
     try {
       if (DATABASE_ID && USUARIO_COLLECTION_ID) {
         const documentResponse = await databases.createDocument(
