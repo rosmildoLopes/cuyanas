@@ -38,9 +38,14 @@ import { ArrowRight } from "lucide-react";
 import { HandleSweetAlertTerminosRenaper } from "@/components/Consetimiento";
 import { FaInfoCircle } from "react-icons/fa";
 import { Client, Databases, ID } from "appwrite";
-import { databases, storage } from "../../appwriteConfig";
+import {
+  databases,
+  NEXT_PUBLIC_BUCKET_ID,
+  storage,
+} from "../../appwriteConfig";
 import { USUARIO_COLLECTION_ID, DATABASE_ID } from "../../appwriteConfig";
-import { InputFile } from "@/components/InputFile";
+import CustomFormField, { FormFieldType } from "@/components/CustomFormField";
+import FileUploader from "@/components/FileUploader";
 
 export type Input = z.infer<typeof registerSchema>;
 export default function Home() {
@@ -84,6 +89,7 @@ export default function Home() {
       actividad: "",
       profesion: "",
       formaDeTransferencia: "",
+      identificationDocument: [],
     },
   });
 
@@ -103,25 +109,59 @@ export default function Home() {
     // if (response){
     //   emailEnviado()
     // }
-    
+
     try {
-      if (DATABASE_ID && USUARIO_COLLECTION_ID) {
-        const documentResponse = await databases.createDocument(
-          DATABASE_ID,
-          USUARIO_COLLECTION_ID,
-          ID.unique(),
-          data
-        );
-        console.log("Document created:", documentResponse);
+      if (NEXT_PUBLIC_BUCKET_ID && DATABASE_ID && USUARIO_COLLECTION_ID) {
+        if (
+          data.identificationDocument &&
+          data.identificationDocument.length > 0
+        ) {
+          const file = data.identificationDocument[0];
+
+          // Verificar que `file` sea de tipo `File`
+          if (!(file instanceof File)) {
+            console.error("El archivo no es una instancia de File");
+            return;
+          }
+
+          const fileResponse = await storage.createFile(
+            NEXT_PUBLIC_BUCKET_ID,
+            ID.unique(),
+            file
+          );
+          console.log("Imagen subida:", fileResponse);
+
+          // Crear el objeto documentData extendiendo `data` y añadiendo los campos adicionales
+          const documentData = {
+            ...data,
+            imageUrl: fileResponse.$id,
+            filename: file.name,
+          };
+
+          console.log("Datos del documento a crear:", documentData);
+
+          const createDocumentResponse = await databases.createDocument(
+            DATABASE_ID,
+            USUARIO_COLLECTION_ID,
+            ID.unique(),
+            documentData
+          );
+          console.log("Documento creado:", createDocumentResponse);
+
+          // ¡Listo! Has subido la imagen al bucket de almacenamiento y creado un documento en la base de datos.
+        } else {
+          console.error("No se ha seleccionado ninguna imagen.");
+        }
       } else {
         console.error(
-          "DATABASE_ID o USUARIO_COLLECTION_ID no están definidos."
+          "NEXT_PUBLIC_BUCKET_ID, DATABASE_ID o USUARIO_COLLECTION_ID no están definidos."
         );
       }
     } catch (error) {
-      console.error("Error creating document:", error);
+      console.error("Error al crear el documento:", error);
     }
   };
+
   const handleStepValidation = () => {
     if (formStep === 0) {
       form.trigger(["dni", "tramiteDni", "genero", "terminos"]);
@@ -156,6 +196,7 @@ export default function Home() {
         "celular",
         "email",
         "confirmEmail",
+        "identificationDocument",
       ]);
       const nombreState = form.getFieldState("nombre");
       const apellidoState = form.getFieldState("apellido");
@@ -176,6 +217,9 @@ export default function Home() {
       const celularState = form.getFieldState("celular");
       const emailState = form.getFieldState("email");
       const confirmEmailState = form.getFieldState("confirmEmail");
+      const identificationDocument = form.getFieldState(
+        "identificationDocument"
+      );
 
       if (!nombreState.isDirty || nombreState.invalid) return;
       if (!apellidoState.isDirty || apellidoState.invalid) return;
@@ -196,6 +240,8 @@ export default function Home() {
       if (!celularState.isDirty || celularState.invalid) return;
       if (!emailState.isDirty || emailState.invalid) return;
       if (!confirmEmailState.isDirty || confirmEmailState.invalid) return;
+      if (!identificationDocument.isDirty || identificationDocument.invalid)
+        return;
 
       setFormStep(formStep + 1);
     }
@@ -626,6 +672,20 @@ export default function Home() {
                         </FormControl>
                         <FormMessage />
                       </FormItem>
+                    )}
+                  />
+                  <CustomFormField
+                    fieldType={FormFieldType.SKELETON}
+                    control={form.control}
+                    name="identificationDocument"
+                    label="Scanned Copy of Identification Document"
+                    renderSkeleton={(field) => (
+                      <FormControl>
+                        <FileUploader
+                          files={field.value}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
                     )}
                   />
                 </div>

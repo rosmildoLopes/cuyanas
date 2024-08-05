@@ -47,6 +47,7 @@ export const registerSchema = z
     profesion: z.string(),
     actividad: z.string(),
     formaDeTransferencia: z.string(),
+    identificationDocument: z.custom<File[]>().optional(),
   })
   .refine((data) => data.email === data.confirmEmail, {
     message: "Los correos electrónicos no coinciden",
