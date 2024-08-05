@@ -51,5 +51,5 @@ export const registerSchema = z
   })
   .refine((data) => data.email === data.confirmEmail, {
     message: "Los correos electrónicos no coinciden",
-    path: ["confirmEmail"], // este es el campo que se marcará con el error
+    path: ["confirmEmail"],
   });
