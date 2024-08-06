@@ -1,13 +1,26 @@
 // appwriteConfig.ts
-import { Client, Databases, Storage, ID } from "appwrite";
+import { Client, Databases, Storage } from "appwrite";
 
-export const PROJECT_ID = process.env.PROJECT_ID;
+export const PROJECT_ID = process.env.NEXT_PUBLIC_PROJECT_ID;
 export const ENDPOINT = process.env.NEXT_PUBLIC_ENDPOINT_ID;
-export const DATABASE_ID = process.env.DATABASE_ID;
-export const USUARIO_COLLECTION_ID = process.env.USUARIO_COLLECTION_ID;
+export const DATABASE_ID = process.env.NEXT_PUBLIC_DATABASE_ID;
+export const USUARIO_COLLECTION_ID =
+  process.env.NEXT_PUBLIC_USUARIO_COLLECTION_ID;
 export const NEXT_PUBLIC_BUCKET_ID = process.env.NEXT_PUBLIC_BUCKET_ID;
 
-if (!ENDPOINT || !PROJECT_ID || !DATABASE_ID || !USUARIO_COLLECTION_ID) {
+console.log("ENDPOINT:", ENDPOINT);
+console.log("PROJECT_ID:", PROJECT_ID);
+console.log("DATABASE_ID:", DATABASE_ID);
+console.log("USUARIO_COLLECTION_ID:", USUARIO_COLLECTION_ID);
+console.log("NEXT_PUBLIC_BUCKET_ID:", NEXT_PUBLIC_BUCKET_ID);
+
+if (
+  !ENDPOINT ||
+  !PROJECT_ID ||
+  !DATABASE_ID ||
+  !USUARIO_COLLECTION_ID ||
+  !NEXT_PUBLIC_BUCKET_ID
+) {
   console.error("Las variables deben estar definidas correctamente.");
 }
 
