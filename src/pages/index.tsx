@@ -112,96 +112,96 @@ export default function Home() {
     //   emailEnviado()
     // }
 
-  try {
-    if (NEXT_PUBLIC_BUCKET_ID && DATABASE_ID && USUARIO_COLLECTION_ID) {
-      // Subir dni frente
-      let frenteDni: string | undefined;
-      if (data.frenteDni && data.frenteDni.length > 0) {
-        const identificationFile = data.frenteDni[0];
-        console.log(
-          "Archivo de identificación seleccionado:",
-          identificationFile
-        );
-
-        if (identificationFile instanceof File) {
-          const fileResponse = await storage.createFile(
-            NEXT_PUBLIC_BUCKET_ID,
-            ID.unique(),
+    try {
+      if (NEXT_PUBLIC_BUCKET_ID && DATABASE_ID && USUARIO_COLLECTION_ID) {
+        // Subir dni frente
+        let frenteDni: string | undefined;
+        if (data.frenteDni && data.frenteDni.length > 0) {
+          const identificationFile = data.frenteDni[0];
+          console.log(
+            "Archivo de identificación seleccionado:",
             identificationFile
           );
-          console.log("Imagen de identificación subida:", fileResponse);
-          frenteDni = fileResponse.$id; 
+
+          if (identificationFile instanceof File) {
+            const fileResponse = await storage.createFile(
+              NEXT_PUBLIC_BUCKET_ID,
+              ID.unique(),
+              identificationFile
+            );
+            console.log("Imagen de identificación subida:", fileResponse);
+            frenteDni = fileResponse.$id;
+          } else {
+            console.error(
+              "El archivo de identificación no es una instancia de File"
+            );
+          }
         } else {
           console.error(
-            "El archivo de identificación no es una instancia de File"
+            "No se ha seleccionado ninguna imagen de identificación."
           );
         }
+
+        // Subir dorso  dni
+        let dorsoDni: string | undefined;
+        if (data.dorsoDni && data.dorsoDni.length > 0) {
+          const passPortFile = data.dorsoDni[0];
+          console.log("Archivo de pasaporte seleccionado:", passPortFile);
+
+          if (passPortFile instanceof File) {
+            const fileResponse = await storage.createFile(
+              NEXT_PUBLIC_BUCKET_ID,
+              ID.unique(),
+              passPortFile
+            );
+            console.log("Imagen de pasaporte subida:", fileResponse);
+            dorsoDni = fileResponse.$id;
+          } else {
+            console.error(
+              "El archivo de pasaporte no es una instancia de File"
+            );
+          }
+        } else {
+          console.error("No se ha seleccionado ninguna imagen de pasaporte.");
+        }
+
+        // Crear el objeto documentData extendiendo `data` y añadiendo los campos nuevos
+        const { frenteDni: _id, dorsoDni: _ppId, ...otherData } = data;
+
+        const documentData = {
+          ...otherData,
+          frenteDni: frenteDni || _id, // almacena el id de nuestras fotos a estas variables en appwrite
+          dorsoDni: dorsoDni || _ppId, // almacena el id de nuestras fotos a estas variables en appwrite
+        };
+
+        console.log("Datos del documento a crear:", documentData);
+
+        // Crear documento en la base de datos
+        const createDocumentResponse = await databases.createDocument(
+          DATABASE_ID,
+          USUARIO_COLLECTION_ID,
+          ID.unique(),
+          documentData
+        );
+        console.log("Documento creado:", createDocumentResponse);
       } else {
         console.error(
-          "No se ha seleccionado ninguna imagen de identificación."
+          "NEXT_PUBLIC_BUCKET_ID, DATABASE_ID o USUARIO_COLLECTION_ID no están definidos."
         );
       }
-
-      // Subir dorso  dni
-      let dorsoDni: string | undefined;
-      if (data.dorsoDni && data.dorsoDni.length > 0) {
-        const passPortFile = data.dorsoDni[0];
-        console.log("Archivo de pasaporte seleccionado:", passPortFile);
-
-        if (passPortFile instanceof File) {
-          const fileResponse = await storage.createFile(
-            NEXT_PUBLIC_BUCKET_ID,
-            ID.unique(),
-            passPortFile
-          );
-          console.log("Imagen de pasaporte subida:", fileResponse);
-          dorsoDni = fileResponse.$id; 
-        } else {
-          console.error(
-            "El archivo de pasaporte no es una instancia de File"
-          );
-        }
+    } catch (error) {
+      if (error instanceof AppwriteException) {
+        console.error(
+          "Error al crear el documento:",
+          error.message,
+          error.code,
+          error.response
+        );
       } else {
-        console.error("No se ha seleccionado ninguna imagen de pasaporte.");
+        console.error("Error al crear el documento:", error);
       }
-
-      // Crear el objeto documentData extendiendo `data` y añadiendo los campos nuevos
-      const { frenteDni: _id, dorsoDni: _ppId, ...otherData } = data;
-
-      const documentData = {
-        ...otherData,
-        frenteDni: frenteDni || _id, // almacena el id de nuestras fotos a estas variables en appwrite
-        dorsoDni: dorsoDni || _ppId, // almacena el id de nuestras fotos a estas variables en appwrite
-      };
-
-      console.log("Datos del documento a crear:", documentData);
-
-      // Crear documento en la base de datos
-      const createDocumentResponse = await databases.createDocument(
-        DATABASE_ID,
-        USUARIO_COLLECTION_ID,
-        ID.unique(),
-        documentData
-      );
-      console.log("Documento creado:", createDocumentResponse);
-    } else {
-      console.error(
-        "NEXT_PUBLIC_BUCKET_ID, DATABASE_ID o USUARIO_COLLECTION_ID no están definidos."
-      );
     }
-  } catch (error) {
-    if (error instanceof AppwriteException) {
-      console.error(
-        "Error al crear el documento:",
-        error.message,
-        error.code,
-        error.response
-      );
-    } else {
-      console.error("Error al crear el documento:", error);
-    }
-  }
-};
+  };
 
   const handleStepValidation = () => {
     if (formStep === 0) {
@@ -975,8 +975,8 @@ export default function Home() {
               >
                 <div className="flex flex-col items-center justify-center p-4">
                   <p className="text-lg">
-                    Muchas gracias, te enviaremos un mail con toda la
-                    información...
+                    Muchas gracias por tu tiempo, te enviaremos un mail con toda
+                    la información...
                   </p>
                 </div>
               </section>
@@ -1008,7 +1008,7 @@ export default function Home() {
                   })}
                   type="submit"
                 >
-                  Submit
+                  Finalizar
                 </Button>
               </div>
             </form>
