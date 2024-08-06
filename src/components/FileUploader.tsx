@@ -39,7 +39,7 @@ const FileUploader = ({ files, onChange }: FileUploaderProps) => {
           />
           <div className="file-upload_label">
             <p className="text-lg">
-              <span className="text-green-500 font-medium">Haga clic para cargar </span>
+              <span className="text-blue-600 font-medium">Haga clic para cargar </span>
               o arrastre y suelte
             </p>
             <p className="text-12-regular">

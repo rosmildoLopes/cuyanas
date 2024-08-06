@@ -8,12 +8,6 @@ export const USUARIO_COLLECTION_ID =
   process.env.NEXT_PUBLIC_USUARIO_COLLECTION_ID;
 export const NEXT_PUBLIC_BUCKET_ID = process.env.NEXT_PUBLIC_BUCKET_ID;
 
-console.log("ENDPOINT:", ENDPOINT);
-console.log("PROJECT_ID:", PROJECT_ID);
-console.log("DATABASE_ID:", DATABASE_ID);
-console.log("USUARIO_COLLECTION_ID:", USUARIO_COLLECTION_ID);
-console.log("NEXT_PUBLIC_BUCKET_ID:", NEXT_PUBLIC_BUCKET_ID);
-
 if (
   !ENDPOINT ||
   !PROJECT_ID ||

@@ -90,7 +90,8 @@ export default function Home() {
       actividad: "",
       profesion: "",
       formaDeTransferencia: "",
-      identificationDocumentId: [],
+      frenteDni: [],
+      dorsoDni: [],
     },
   });
 
@@ -110,66 +111,97 @@ export default function Home() {
     // if (response){
     //   emailEnviado()
     // }
-    
 
-    console.log("Iniciando el envío del formulario...");
-    try {
-      if (NEXT_PUBLIC_BUCKET_ID && DATABASE_ID && USUARIO_COLLECTION_ID) {
-        console.log("IDs de Appwrite definidos:", NEXT_PUBLIC_BUCKET_ID, DATABASE_ID, USUARIO_COLLECTION_ID);
-        
-        if (data.identificationDocumentId && data.identificationDocumentId.length > 0) {
-          const file = data.identificationDocumentId[0];
-          console.log("Archivo seleccionado:", file);
-  
-          // Verificar que `file` sea de tipo `File`
-          if (!(file instanceof File)) {
-            console.error("El archivo no es una instancia de File");
-            return;
-          }
-  
-          // Subir el archivo
+  try {
+    if (NEXT_PUBLIC_BUCKET_ID && DATABASE_ID && USUARIO_COLLECTION_ID) {
+      // Subir dni frente
+      let frenteDni: string | undefined;
+      if (data.frenteDni && data.frenteDni.length > 0) {
+        const identificationFile = data.frenteDni[0];
+        console.log(
+          "Archivo de identificación seleccionado:",
+          identificationFile
+        );
+
+        if (identificationFile instanceof File) {
           const fileResponse = await storage.createFile(
             NEXT_PUBLIC_BUCKET_ID,
             ID.unique(),
-            file
+            identificationFile
           );
-          console.log("Imagen subida:", fileResponse);
-  
-          // Excluir identificationDocument del documentData
-          const { identificationDocumentId, ...otherData } = data;
-          const documentData = {
-            ...otherData,
-            identificationDocumentId: fileResponse.$id, // Asigna el ID del archivo al campo
-          };
-  
-          console.log("Datos del documento a crear:", documentData);
-  
-          // Crear documento en la base de datos
-          try {
-            const createDocumentResponse = await databases.createDocument(
-              DATABASE_ID,
-              USUARIO_COLLECTION_ID,
-              ID.unique(),
-              documentData
-            );
-            console.log("Documento creado:", createDocumentResponse);
-          } catch (docError) {
-            console.error("Error al crear el documento en la base de datos:", docError);
-          }
+          console.log("Imagen de identificación subida:", fileResponse);
+          frenteDni = fileResponse.$id; 
         } else {
-          console.error("No se ha seleccionado ninguna imagen.");
+          console.error(
+            "El archivo de identificación no es una instancia de File"
+          );
         }
       } else {
-        console.error("NEXT_PUBLIC_BUCKET_ID, DATABASE_ID o USUARIO_COLLECTION_ID no están definidos.");
+        console.error(
+          "No se ha seleccionado ninguna imagen de identificación."
+        );
       }
-    } catch (error) {
-      if (error instanceof AppwriteException) {
-        console.error("Error al crear el documento:", error.message, error.code, error.response);
+
+      // Subir dorso  dni
+      let dorsoDni: string | undefined;
+      if (data.dorsoDni && data.dorsoDni.length > 0) {
+        const passPortFile = data.dorsoDni[0];
+        console.log("Archivo de pasaporte seleccionado:", passPortFile);
+
+        if (passPortFile instanceof File) {
+          const fileResponse = await storage.createFile(
+            NEXT_PUBLIC_BUCKET_ID,
+            ID.unique(),
+            passPortFile
+          );
+          console.log("Imagen de pasaporte subida:", fileResponse);
+          dorsoDni = fileResponse.$id; 
+        } else {
+          console.error(
+            "El archivo de pasaporte no es una instancia de File"
+          );
+        }
       } else {
-        console.error("Error al crear el documento:", error);
+        console.error("No se ha seleccionado ninguna imagen de pasaporte.");
       }
+
+      // Crear el objeto documentData extendiendo `data` y añadiendo los campos nuevos
+      const { frenteDni: _id, dorsoDni: _ppId, ...otherData } = data;
+
+      const documentData = {
+        ...otherData,
+        frenteDni: frenteDni || _id, // almacena el id de nuestras fotos a estas variables en appwrite
+        dorsoDni: dorsoDni || _ppId, // almacena el id de nuestras fotos a estas variables en appwrite
+      };
+
+      console.log("Datos del documento a crear:", documentData);
+
+      // Crear documento en la base de datos
+      const createDocumentResponse = await databases.createDocument(
+        DATABASE_ID,
+        USUARIO_COLLECTION_ID,
+        ID.unique(),
+        documentData
+      );
+      console.log("Documento creado:", createDocumentResponse);
+    } else {
+      console.error(
+        "NEXT_PUBLIC_BUCKET_ID, DATABASE_ID o USUARIO_COLLECTION_ID no están definidos."
+      );
     }
-  };
+  } catch (error) {
+    if (error instanceof AppwriteException) {
+      console.error(
+        "Error al crear el documento:",
+        error.message,
+        error.code,
+        error.response
+      );
+    } else {
+      console.error("Error al crear el documento:", error);
+    }
+  }
+};
 
   const handleStepValidation = () => {
     if (formStep === 0) {
@@ -205,7 +237,8 @@ export default function Home() {
         "celular",
         "email",
         "confirmEmail",
-        "identificationDocumentId",
+        "frenteDni",
+        "dorsoDni",
       ]);
       const nombreState = form.getFieldState("nombre");
       const apellidoState = form.getFieldState("apellido");
@@ -226,9 +259,8 @@ export default function Home() {
       const celularState = form.getFieldState("celular");
       const emailState = form.getFieldState("email");
       const confirmEmailState = form.getFieldState("confirmEmail");
-      const identificationDocumentId = form.getFieldState(
-        "identificationDocumentId"
-      );
+      const frenteDni = form.getFieldState("frenteDni");
+      const dorsoDni = form.getFieldState("dorsoDni");
 
       if (!nombreState.isDirty || nombreState.invalid) return;
       if (!apellidoState.isDirty || apellidoState.invalid) return;
@@ -249,8 +281,8 @@ export default function Home() {
       if (!celularState.isDirty || celularState.invalid) return;
       if (!emailState.isDirty || emailState.invalid) return;
       if (!confirmEmailState.isDirty || confirmEmailState.invalid) return;
-      if (!identificationDocumentId.isDirty || identificationDocumentId.invalid)
-        return;
+      if (!frenteDni.isDirty || frenteDni.invalid) return;
+      if (!dorsoDni.isDirty || dorsoDni.invalid) return;
 
       setFormStep(formStep + 1);
     }
@@ -683,11 +715,27 @@ export default function Home() {
                       </FormItem>
                     )}
                   />
+                </div>
+                <div className="flex flex-col md:flex-row gap-10">
                   <CustomFormField
                     fieldType={FormFieldType.SKELETON}
                     control={form.control}
-                    name="identificationDocumentId"
-                    label="Scanned Copy of Identification Document"
+                    name="frenteDni"
+                    label="Fronto frente de su dni"
+                    renderSkeleton={(field) => (
+                      <FormControl>
+                        <FileUploader
+                          files={field.value}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                    )}
+                  />
+                  <CustomFormField
+                    fieldType={FormFieldType.SKELETON}
+                    control={form.control}
+                    name="dorsoDni"
+                    label="Dorso de su dni"
                     renderSkeleton={(field) => (
                       <FormControl>
                         <FileUploader
