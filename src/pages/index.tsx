@@ -96,21 +96,21 @@ export default function Home() {
   });
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
-    // const response = await fetch("/api/send/route", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     nombre: data.nombre,
-    //     apellido: data.apellido,
-    //     email: data.email,
-    //   }),
-    // });
+    const response = await fetch("/api/send/route", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nombre: data.nombre,
+        apellido: data.apellido,
+        email: data.email,
+      }),
+    });
 
-    // if (response){
-    //   emailEnviado()
-    // }
+    if (response){
+      emailEnviado()
+    }
 
     try {
       if (NEXT_PUBLIC_BUCKET_ID && DATABASE_ID && USUARIO_COLLECTION_ID) {

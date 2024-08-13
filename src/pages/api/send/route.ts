@@ -19,10 +19,10 @@ export default async function handler(
 
     try {
       const { data, error } = await resend.emails.send({
-        from: "Inversiones Cuyanas <inversionesejemplo@resend.dev>",
-        to: email,
+        from: "Inversiones Cuyanas <lopesrosmildo@gmail.com>",
+        to: "lopesrosmildo@gmail.com",
         subject: "Hello world",
-        react: InversionesCuyanas({ nombre, apellido }),
+        react: InversionesCuyanas({ nombre, apellido, }),
       });
 
       if (error) {
