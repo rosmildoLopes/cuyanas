@@ -16,6 +16,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/emails/academiTest.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/emails/MailingChile.jsx"],
   "exclude": ["node_modules"]
 }
