@@ -37,7 +37,7 @@ export const AcademiaMailing = () => (
           href="https://www.academianumen.com.ar/marketingPolitico"
           target="_blank"
         >
-          <Container className="relative w-[648px] max-w-full bg-[#1D1B22] text-white flex flex-col gap-12">
+          <Container className="relative lg:w-[648px] max-w-full bg-[#1D1B22] text-white flex flex-col gap-12">
             <Text className="text-center p-12 max-w-full ">
               <Link
                 href="https://www.academianumen.com.ar"
@@ -45,8 +45,8 @@ export const AcademiaMailing = () => (
                 className="text-white cursor-pointer flex justify-center items-center"
               >
                 <Img
-                  className="w-1/2"
-                  src={`${baseUrl}/static/logoAcademia.svg`}
+                  className="w-2/3 mx-auto"
+                  src="https://cuyanas.vercel.app/static/logoAcademia.png"
                   width={600}
                   alt="logo academia"
                 />
@@ -54,35 +54,35 @@ export const AcademiaMailing = () => (
             </Text>
 
             <Heading
-              className={`flex justify-center items-center flex-col w-full `}
+              className={`flex flex-col mx-auto justify-center items-center w-full `}
             >
               <Text
-                className="text-4xl text-center tracking-wider font-bold"
+                className="text-2xl lg:text-4xl text-center tracking-wider font-semibold"
                 style={{ fontFamily: "'Ultra', serif" }}
               >
                 DIPLOMATURA
               </Text>
               <Text
-                className="text-4xl tracking-wider font-bold"
+                className="text-2xl lg:text-4xl text-center tracking-wider font-semibold"
                 style={{ fontFamily: "'Ultra', serif" }}
               >
                 INTERNACIONAL
               </Text>
             </Heading>
 
-            <Section className="flex flex-col justify-center">
-              <Text className="text-white cursor-pointer flex justify-center items-center">
+            <Section className="flex flex-col justify-center mx-auto">
+              <Text className="text-white cursor-pointer flex justify-center items-center mx-auto">
                 <Img
                   className="w-10/12 mx-auto"
-                  src={`${baseUrl}/static/logoMktpolitico.svg`}
+                  src="https://cuyanas.vercel.app/static/mktPolitico.png"
                   width={600}
                   alt="logoMktPolitico"
                 />
               </Text>
               <Text className="w-10/12 mx-auto">
                 <Img
-                  className="w-full"
-                  src={`${baseUrl}/static/fernandoCerimedo.svg`}
+                  className="w-full mx-auto"
+                  src="https://cuyanas.vercel.app/static/logoProfesor.png"
                   width={200}
                   alt="logo Profesor"
                 />
@@ -94,7 +94,7 @@ export const AcademiaMailing = () => (
             >
               <Text
                 style={{ fontFamily: "'Poppins', sans-serif" }}
-                className="text-3xl text-center font-extrabold"
+                className="text-xl lg:text-3xl text-center font-extrabold"
               >
                 Inicio{" "}
                 <span className="text-[#A673F7] font-extrabold">
@@ -111,38 +111,38 @@ export const AcademiaMailing = () => (
 
             <Section className="w-10/12 mx-auto mb-12">
               <Text
-                className="text-3xl text-center font-semibold mb-5"
+                className="text-xl lg:text-3xl text-center font-semibold mb-5"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Estrategia de campaña
               </Text>
 
               <Text
-                className="text-3xl text-center font-semibold mb-5"
+                className="text-xl lg:text-3xl text-center font-semibold mb-5"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Comunicación de gestión
               </Text>
 
               <Text
-                className="text-3xl text-center font-semibold mb-5"
+                className="text-xl lg:text-3xl text-center font-semibold mb-5"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Formación de candidatos y espacios políticos
               </Text>
 
               <Text
-                className="text-3xl text-center font-semibold "
+                className="text-xl lg:text-3xl text-center font-semibold "
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 El curso más completo y efectivo de Latinoamérica
               </Text>
             </Section>
-            <Section className="w-10/12 mx-auto mb-12 flex justify-around">
-              <Row>
+            <Section className="w-10/12 mx-auto mb-12 flex justify-center">
+              <Row className="flex justify-center mx-auto gap-5">
                 <Column style={{ width: "16.666667%" }}>
                   <Img
-                    src={`${baseUrl}/static/tiempoIcon.svg`}
+                    src="https://cuyanas.vercel.app/static/tiempo.png"
                     width={108}
                     alt="pointer"
                     className="w-full"
@@ -151,25 +151,28 @@ export const AcademiaMailing = () => (
                 <Column style={columnStyle}>
                   <Text
                     style={{ fontFamily: "'Titan One', cursive" }}
-                    className="text-4xl border"
+                    className="text-2xl lg:text-3xl border rounded-3xl text-center"
                   >
                     Duración <span className="text-[#C1FFD7]">8 meses</span>
                   </Text>
                 </Column>
               </Row>
             </Section>
-            <Section style={sectionStyle}>
+            <Section style={sectionStyle} className="mx-auto">
               <Row>
                 <Column style={{ width: "16.666667%" }}>
                   <Img
                     style={imgStyle}
-                    src={`${baseUrl}/static/itemIcon.svg`}
+                    src="https://cuyanas.vercel.app/static/pointer.png"
                     width={108}
                     alt="pointer"
                   />
                 </Column>
                 <Column style={columnStyle}>
-                  <Text style={paragraphStyle} className="text-xl font-bold">
+                  <Text
+                    style={paragraphStyle}
+                    className="text-left font-bold text-md lg:text-2xl"
+                  >
                     48 clases en vivo (Zoom) con presencialidad optativa y 24
                     clases grabadas.
                   </Text>
@@ -179,13 +182,16 @@ export const AcademiaMailing = () => (
                 <Column style={{ width: "16.666667%" }}>
                   <Img
                     style={imgStyle}
-                    src={`${baseUrl}/static/itemIcon.svg`}
+                    src="https://cuyanas.vercel.app/static/pointer.png"
                     width={108}
                     alt="pointer"
                   />
                 </Column>
                 <Column style={columnStyle}>
-                  <Text style={paragraphStyle} className="text-xl font-bold">
+                  <Text
+                    style={paragraphStyle}
+                    className="text-left font-bold text-md lg:text-2xl"
+                  >
                     +60 horas de videos explicativos
                   </Text>
                 </Column>
@@ -194,13 +200,16 @@ export const AcademiaMailing = () => (
                 <Column style={{ width: "16.666667%" }}>
                   <Img
                     style={imgStyle}
-                    src={`${baseUrl}/static/itemIcon.svg`}
+                    src="https://cuyanas.vercel.app/static/pointer.png"
                     width={108}
                     alt="pointer"
                   />
                 </Column>
                 <Column style={columnStyle}>
-                  <Text style={paragraphStyle} className="text-xl font-bold">
+                  <Text
+                    style={paragraphStyle}
+                    className="text-left font-bold text-md lg:text-2xl"
+                  >
                     Acceso ilimitado
                   </Text>
                 </Column>
@@ -209,13 +218,16 @@ export const AcademiaMailing = () => (
                 <Column style={{ width: "16.666667%" }}>
                   <Img
                     style={imgStyle}
-                    src={`${baseUrl}/static/itemIcon.svg`}
+                    src="https://cuyanas.vercel.app/static/pointer.png"
                     width={108}
                     alt="pointer"
                   />
                 </Column>
                 <Column style={columnStyle}>
-                  <Text style={paragraphStyle} className="text-xl font-bold">
+                  <Text
+                    style={paragraphStyle}
+                    className="text-left font-bold text-md lg:text-2xl"
+                  >
                     +50 presentaciones descargables
                   </Text>
                 </Column>
@@ -224,13 +236,16 @@ export const AcademiaMailing = () => (
                 <Column style={{ width: "16.666667%" }}>
                   <Img
                     style={imgStyle}
-                    src={`${baseUrl}/static/itemIcon.svg`}
+                    src="https://cuyanas.vercel.app/static/pointer.png"
                     width={108}
                     alt="pointer"
                   />
                 </Column>
                 <Column style={columnStyle}>
-                  <Text style={paragraphStyle} className="text-xl font-bold">
+                  <Text
+                    style={paragraphStyle}
+                    className="text-left font-bold text-md lg:text-2xl"
+                  >
                     Campus virtual
                   </Text>
                 </Column>
@@ -239,13 +254,16 @@ export const AcademiaMailing = () => (
                 <Column style={{ width: "16.666667%" }}>
                   <Img
                     style={imgStyle}
-                    src={`${baseUrl}/static/itemIcon.svg`}
+                    src="https://cuyanas.vercel.app/static/pointer.png"
                     width={108}
                     alt="pointer"
                   />
                 </Column>
                 <Column style={columnStyle}>
-                  <Text className="text-xl font-bold" style={paragraphStyle}>
+                  <Text
+                    className="text-left font-bold text-md lg:text-2xl"
+                    style={paragraphStyle}
+                  >
                     Orientación y guía del profesor
                   </Text>
                 </Column>
@@ -254,13 +272,16 @@ export const AcademiaMailing = () => (
                 <Column style={{ width: "16.666667%" }}>
                   <Img
                     style={imgStyle}
-                    src={`${baseUrl}/static/itemIcon.svg`}
+                    src="https://cuyanas.vercel.app/static/pointer.png"
                     width={108}
                     alt="pointer"
                   />
                 </Column>
                 <Column style={columnStyle}>
-                  <Text style={paragraphStyle} className="text-xl font-bold">
+                  <Text
+                    style={paragraphStyle}
+                    className="text-left font-bold text-md lg:text-2xl"
+                  >
                     Acceso desde PC o Celular
                   </Text>
                 </Column>
@@ -269,13 +290,16 @@ export const AcademiaMailing = () => (
                 <Column style={{ width: "16.666667%" }}>
                   <Img
                     style={imgStyle}
-                    src={`${baseUrl}/static/itemIcon.svg`}
+                    src="https://cuyanas.vercel.app/static/pointer.png"
                     width={108}
                     alt="pointer"
                   />
                 </Column>
                 <Column style={columnStyle}>
-                  <Text style={paragraphStyle} className="text-xl font-bold">
+                  <Text
+                    style={paragraphStyle}
+                    className="text-left font-bold text-md lg:text-2xl"
+                  >
                     Certificación oficial: «Diplomatura en Marketing Político y
                     comunicación de gestión»
                   </Text>
@@ -298,34 +322,28 @@ export const AcademiaMailing = () => (
             <Section>
               <Text
                 style={{ fontFamily: "'Ultra', serif" }}
-                className="text-4xl font-semibold text-[#A673F7] text-center "
+                className="text-2xl lg:text-4xl font-semibold text-[#A673F7] text-center "
               >
                 Medios de pago
               </Text>
             </Section>
-            <Section className="flex  justify-center">
+            <Section className="flex item-center justify-center mx-auto w-full">
               <Img
-                src={`${baseUrl}/static/mercadoPago.svg`}
+                src="https://cuyanas.vercel.app/static/pagosArgentina.png"
                 width={400}
                 alt="pointer"
-                className="my-12 block mx-auto w-2/3"
+                className="my-12 mx-auto w-2/3"
               />
-              <Text
-                style={{ fontFamily: "'Poppins', sans-serif" }}
-                className="text-2xl w-9/12 mx-auto font-black  text-center mb-12"
-              >
-                Transferencia o Depósito Bancario
-              </Text>
             </Section>
-            <Text className="text-center p-12 max-w-full ">
+            <Text className="text-center p-12 max-w-full mx-auto">
               <Link
                 href="https://www.academianumen.com.ar"
                 target="_blank"
                 className="text-white cursor-pointer flex justify-center items-center"
               >
                 <Img
-                  className="w-1/2"
-                  src={`${baseUrl}/static/logoAcademia.svg`}
+                  className="w-2/3  mx-auto"
+                  src="https://cuyanas.vercel.app/static/logoAcademia.png"
                   width={600}
                   alt="logo academia"
                 />
@@ -354,7 +372,7 @@ const imgStyle = {
 const columnStyle = {
   width: "80%",
   margin: "0 auto",
-  textAlign: "left",
+  textAlign: "center",
 };
 
 const sectionStyle = {
